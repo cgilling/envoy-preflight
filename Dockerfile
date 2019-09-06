@@ -17,6 +17,6 @@ RUN go build -o /envoy-preflight
 # -----
 
 # Runtime container
-FROM scratch
+FROM alpine
 
-COPY --from=builder /envoy-preflight /bin/envoy-preflight
+COPY --from=builder /envoy-preflight /usr/local/bin/envoy-preflight
