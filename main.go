@@ -74,7 +74,11 @@ func main() {
 		// Either we had a clean exit, or we are configured to kill envoy anyway
 		url := fmt.Sprintf("%s/quitquitquit", host)
 
-		_ = typhon.NewRequest(context.Background(), "POST", url, nil).Send().Response()
+		if os.Getenv("PKILL_PILOT") == "true" {
+			_ = exec.Command("pkill", "-INT", "pilot-agent").Run()
+		} else {
+			_ = typhon.NewRequest(context.Background(), "POST", url, nil).Send().Response()
+		}
 	}
 
 	os.Exit(exitCode)
