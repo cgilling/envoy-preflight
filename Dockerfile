@@ -9,9 +9,12 @@ WORKDIR /build
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 
+ADD go.mod .
+ADD go.sum .
+RUN go mod download
+
 ADD . .
 
-RUN go mod init scratch
 RUN go build -o /envoy-preflight
 
 # -----
